@@ -1,0 +1,23 @@
+@startuml
+interface Sub{
+    void KiemTraSoDu()
+    bool NhanThongBao(String mes): bool
+}
+
+class TaiKhoan{
+    - int SoDu;
+    + void KiemTraSoDu() : void
+    + bool NhanThongBao(String mes): bool
+}
+class ATM{
+    + void NhanThe(Sub sub)
+    + void RutThe(Sub sub)
+    + void RutTien(double val)
+}
+
+Sub <-- ATM : taikhoan
+Sub <|.. TaiKhoan
+TaiKhoan --> ATM : atm
+
+
+@enduml

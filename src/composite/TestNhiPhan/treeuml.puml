@@ -1,0 +1,17 @@
+@startuml
+abstract class Node{
+    + int value
+    +(abstract) void duyet()
+    +(abstract) void themTrai(Node a)
+    +(abstract) void themPhai(Node a)
+    +(abstract) void xoaTrai(Node a)
+    +(abstract) void xoaPhai(Node a)
+}
+
+class NodeLeaf
+class Nodetrong
+Node <|-- NodeLeaf
+Node <|-- Nodetrong
+Nodetrong --> Node : trai
+Nodetrong --> Node : phai
+@enduml

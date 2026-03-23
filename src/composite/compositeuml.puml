@@ -1,0 +1,40 @@
+@startuml
+title Composite Pattern - Cấu trúc cơ bản
+
+interface Component {
+    +operation()
+    +add(Component)
+    +remove(Component)
+    +getChild(int): Component
+}
+
+class Leaf {
+    +operation()
+}
+
+class Composite {
+    -children: List<Component>
+    +operation()
+    +add(Component)
+    +remove(Component)
+    +getChild(int): Component
+}
+
+Component <|.. Leaf
+Component <|.. Composite
+
+Composite o--> "many" Component : contains
+
+note top of Component
+  Client gọi operation() thống nhất
+  trên cả Leaf và Composite
+end note
+
+note bottom of Composite
+  Thực hiện operation() bằng cách
+  gọi operation() trên tất cả children (đệ quy)
+end note
+
+Client --> Component
+
+@enduml

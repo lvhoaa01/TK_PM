@@ -1,0 +1,15 @@
+@startuml
+class DataAccess{
+    - {static} DataAccess instance
+    - DataAccess()
+    + {static} DataAccess getInstance()
+    + void add(SanPham sp)
+    + void inDS()
+}
+class SanPham{
+    - String MaSP, TenSP
+    - int SoLuong, DonGia
+}
+
+DataAccess *--> SanPham:sps
+@enduml

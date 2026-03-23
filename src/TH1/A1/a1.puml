@@ -1,0 +1,20 @@
+@startuml
+
+class HoaDon{
+    # HoaDon(Builder b)
+}
+class Builder{
+    + Builder buildHeader(String id, String ngayBan, String tenKh)
+    + Builder addCTHD(String sp, int soluong, int dongia, float ck)
+    + Builder build()
+}
+class HoaDonHeader
+class CTHD
+Builder ..> HoaDon
+HoaDon --> HoaDonHeader: header
+HoaDon *--> CTHD: cthds
+
+Builder --> HoaDonHeader: header
+Builder *--> CTHD: cthds
+
+@enduml

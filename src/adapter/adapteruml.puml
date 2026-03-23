@@ -1,0 +1,31 @@
+@startuml
+title Adapter Pattern - Object Adapter (phổ biến nhất)
+
+interface Target {
+    +request()
+}
+
+class Adapter {
+    +request()
+}
+
+class Adaptee {
+    +specificRequest()
+}
+
+Target <|.. Adapter
+Adapter --> Adaptee : adaptee
+
+note top of Adapter
+  Adapter triển khai interface Target
+  và "dịch" (delegate) sang Adaptee
+end note
+
+note right of Adaptee
+  Lớp cũ / legacy / third-party
+  có interface không tương thích
+end note
+
+Client --> Target : sử dụng
+
+@enduml

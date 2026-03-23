@@ -1,0 +1,56 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Tokenize {
+    + sto(): List<String>
+    + print(): String
+}
+
+class ChuoiDauTien {
+    - chuoi: String
+    + ChuoiDauTien(chuoi: String)
+    + print(): String
+    + sto(): List<String>
+}
+
+abstract class TokenizeDecorator {
+    # tokenize: Tokenize
+    + TokenizeDecorator(tokenize: Tokenize)
+    + print(): String
+    + sto(): List<String>
+}
+
+class TachTu {
+    + TachTu(tokenize: Tokenize)
+    - FuncTachTu(chuoi: String): List<String>
+    + print(): String
+    + sto(): List<String>
+}
+
+class LoaiBoTuDung {
+    + LoaiBoTuDung(tokenize: Tokenize)
+    - FuncLoaiBoTuDung(chuoi: String): List<String>
+    + print(): String
+    + sto(): List<String>
+}
+
+class LoaiBoDauCau {
+    + LoaiBoDauCau(tokenize: Tokenize)
+    - FuncLoaiBoDauCau(chuoi: String): List<String>
+    + print(): String
+    + sto(): List<String>
+}
+
+' Quan hệ thực thi giao diện (Implements)
+Tokenize <|.. ChuoiDauTien
+Tokenize <|.. TokenizeDecorator
+
+' Quan hệ Aggregation (Decorator chứa Tokenize)
+TokenizeDecorator o--> Tokenize : " bọc"
+
+' Quan hệ kế thừa cho các Decorator cụ thể
+TokenizeDecorator <|-- TachTu
+TokenizeDecorator <|-- LoaiBoDauCau
+TokenizeDecorator <|-- LoaiBoTuDung
+
+@enduml
