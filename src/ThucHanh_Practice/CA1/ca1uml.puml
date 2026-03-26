@@ -1,0 +1,48 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class MonHoc {
+    - maMH : String
+    - tenMH : String
+    + MonHoc(maMH: String, tenMH: String)
+    + toString() : String
+}
+
+interface Listener<T> {
+    + onEvent(data: T) : void
+}
+
+class Stream<T> {
+    - listeners : List<Listener<T>>
+    + addListener(l: Listener<T>) : void
+    + addEvent(data: T) : void
+}
+
+class DataAccess {
+    - {static} instance : DataAccess
+    - danhSachMonHoc : List<MonHoc>
+    - stream : Stream<List<MonHoc>>
+
+    - DataAccess()
+    + {static} getInstance() : DataAccess
+    + getStream() : Stream<List<MonHoc>>
+    + addMonHoc(mh: MonHoc) : void
+    + updateMonHoc(index: int, mh: MonHoc) : void
+    + deleteMonHoc(index: int) : void
+}
+note right of DataAccess: Lớp này là Singleton.\nChứa một đối tượng Stream để\ntự động phát tín hiệu (broadcast)\nkhi dữ liệu thay đổi.
+
+class Client {
+    - tenClient : String
+    + Client(tenClient: String)
+    + onEvent(data: List<MonHoc>) : void
+}
+
+Client ..|> Listener : implements
+Stream o--> "*" Listener : manages >
+DataAccess *--> "1" Stream : contains >
+DataAccess o--> "*" MonHoc : manages >
+Main ..> DataAccess : uses >
+Main ..> Client : creates >
+
+@enduml

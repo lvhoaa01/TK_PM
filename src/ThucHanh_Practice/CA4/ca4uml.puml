@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface ThanhVien {
+    + onTinMoi(index: int, tinNoiDung: String) : void
+    + onCapNhatTin(index: int, tinMoiNoiDung: String) : void
+}
+
+class ThanhVienA {
+    - ten : String
+    + ThanhVienA(ten: String)
+    + onTinMoi(index: int, tinNoiDung: String) : void
+    + onCapNhatTin(index: int, tinMoiNoiDung: String) : void
+}
+
+class ThanhVienB {
+    - ten : String
+    - lichSuTinNhan : Map<Integer, String>
+    + ThanhVienB(ten: String)
+    + onTinMoi(index: int, tinNoiDung: String) : void
+    + onCapNhatTin(index: int, tinMoiNoiDung: String) : void
+}
+note right of ThanhVienB: Lưu trữ bản sao dữ liệu\nbằng Map để khớp Index\nvới Topic.
+
+class Topic {
+    - danhSachThanhVien : List<ThanhVien>
+    - danhSachTin : List<String>
+
+    + dangKy(tv: ThanhVien) : void
+    + huyDangKy(tv: ThanhVien) : void
+    + taoTinMoi(noiDung: String) : void
+    + capNhatTin(index: int, noiDungMoi: String) : void
+}
+
+ThanhVienA ..|> ThanhVien : implements
+ThanhVienB ..|> ThanhVien : implements
+Topic o--> "*" ThanhVien : notifies >
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+enum Candidate {
+    DONALD_TRUMP
+    JOE_BIDEN
+}
+
+class User {
+    - name : String
+    + User(name: String)
+    + getName() : String
+    + vote(candidate: Candidate) : void
+}
+note left of User: Lớp người dùng chứa\nhàm vote gọi tới Election
+
+class Election {
+    - {static} instance : Election
+    - votesForTrump : int
+    - votesForBiden : int
+    - votedUsers : Set<String>
+
+    - Election()
+    + {static} getInstance() : Election
+    + vote(userName: String, candidate: Candidate) : void
+    + printResults() : void
+}
+note right of Election: Lớp Singleton (Khởi tạo Lazy).\nChứa Set<String> để chặn\nviệc bầu cử 2 lần.
+
+class Main {
+    + main(args: String[]) : void
+}
+
+User ..> Election : calls getInstance().vote() >
+User ..> Candidate : uses >
+Election ..> Candidate : uses >
+Main ..> User : creates >
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+interface Subject{
+    + void attach(ButtonClickListener listener)
+    + void detach(ButtonClickListener listener)
+    + void notifyListener()
+}
+
+interface ButtonClickListener{
+    + void onClick(int clickCount)
+}
+
+class Button{
+    - List<ButtonClickListener> listeners
+    - int clickCount
+    + void attach(ButtonClickListener listener)
+    + void detach(ButtonClickListener listener)
+    + void notifyListener()
+    + void click()
+}
+
+class Activity{
+    - String activityName
+    + Activity(String name)
+    + void onClick(int clickCount)
+}
+
+Subject <|.. Button
+ButtonClickListener <|.. Activity
+Button --> ButtonClickListener
+Activity ..> Button
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class HoaDonHeader {
+    - maHoaDon : String
+    - ngayBan : String
+    - tenKhachHang : String
+    + HoaDonHeader(maHoaDon: String, ngayBan: String, tenKhachHang: String)
+    + toString() : String
+}
+
+class CTHD {
+    - sanPham : String
+    - soLuong : int
+    - donGia : double
+    - chietKhau : double
+    + CTHD(sanPham: String, soLuong: int, donGia: double, chietKhau: double)
+    + toString() : String
+}
+
+class HoaDon {
+    - header : HoaDonHeader
+    - chiTietHoaDons : List<CTHD>
+    - HoaDon(builder: Builder)
+    + toString() : String
+}
+
+class Builder {
+    - header : HoaDonHeader
+    - chiTietHoaDons : List<CTHD>
+    + setHeader(maHoaDon: String, ngayBan: String, tenKhachHang: String) : Builder
+    + themCTHD(sanPham: String, soLuong: int, donGia: double, chietKhau: double) : Builder
+    + build() : HoaDon
+}
+
+HoaDon +-- Builder : Contains (Inner Class)
+HoaDon *--> "1" HoaDonHeader : uses
+HoaDon *--> "*" CTHD : contains
+Builder ..> HoaDon : creates >
+Builder o--> "1" HoaDonHeader : builds
+Builder o--> "*" CTHD : builds
+
+@enduml

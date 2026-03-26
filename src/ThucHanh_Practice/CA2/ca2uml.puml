@@ -1,0 +1,34 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface OnClickListener {
+    + onClick(button: Button) : void
+}
+
+class Button {
+    - id : String
+    - listener : OnClickListener
+
+    + Button(id: String)
+    + getId() : String
+    + setOnClickListener(listener: OnClickListener) : void
+    + click() : void
+}
+note left of Button: Lớp Subject (Nguồn phát).\nChứa hàm click() để\nkích hoạt sự kiện.
+
+class Activity {
+    - name : String
+    - clickCount : int
+    - myButton : Button
+
+    + Activity(name: String)
+    + onClick(button: Button) : void
+    + getMyButton() : Button
+}
+note right of Activity: Lớp Observer (Kẻ lắng nghe).\nĐăng ký sự kiện thông qua\nmyButton.setOnClickListener(this)
+
+Activity ..|> OnClickListener : implements
+Button o--> "0..1" OnClickListener : triggers >
+Activity *--> "1" Button : owns >
+
+@enduml

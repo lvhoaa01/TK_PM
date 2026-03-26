@@ -1,0 +1,67 @@
+@startuml
+!theme mars
+title Sơ đồ Lớp - Máy ATM theo Chain of Responsibility
+
+interface Handler {
+    + setNext(handler: Handler): void
+    + process(amount: int): void
+}
+
+class Handler500 {
+    - nextHandler: Handler
+    + setNext(handler: Handler): void
+    + process(amount: int): void
+}
+
+class Handler100 {
+    - nextHandler: Handler
+    + setNext(handler: Handler): void
+    + process(amount: int): void
+}
+
+class Handler50 {
+    - nextHandler: Handler
+    + setNext(handler: Handler): void
+    + process(amount: int): void
+}
+
+class Handler10 {
+    - nextHandler: Handler
+    + setNext(handler: Handler): void
+    + process(amount: int): void
+}
+
+class Handler1 {
+    - nextHandler: Handler
+    + setNext(handler: Handler): void
+    + process(amount: int): void
+}
+
+class ATMClient {
+    - chainRoot: Handler
+    + initChain(): void
+    + withdraw(amount: int): void
+}
+
+Handler <|.. Handler500
+Handler <|.. Handler100
+Handler <|.. Handler50
+Handler <|.. Handler10
+Handler <|.. Handler1
+
+Handler500 o-> Handler : next
+Handler100 o-> Handler : next
+Handler50 o-> Handler : next
+Handler10 o-> Handler : next
+Handler1 o-> Handler : next
+
+ATMClient -> Handler : Gửi yêu cầu (amount)
+
+note right of Handler500
+  Quy trình chung của 1 Handler:
+  1. Tính số tờ: count = amount / Mệnh giá
+  2. Nếu count > 0 -> In kết quả
+  3. Tính tiền dư: remainder = amount % Mệnh giá
+  4. Nếu remainder > 0 và có nextHandler -> Gửi remainder cho nextHandler
+end note
+@enduml

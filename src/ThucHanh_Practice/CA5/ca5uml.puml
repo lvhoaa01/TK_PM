@@ -1,0 +1,28 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface IObserverTaiKhoan {
+    + kiemTraSoDu(soTienCanRut: double) : boolean
+    + nhanThongBao(ketQua: boolean, soTienGiaoDich: double, loiNhan: String) : void
+}
+
+class TaiKhoan {
+    - tenChuTaiKhoan : String
+    - soDu : double
+    + TaiKhoan(tenChuTaiKhoan: String, soDuBanDau: double)
+    + kiemTraSoDu(soTienCanRut: double) : boolean
+    + nhanThongBao(ketQua: boolean, soTienGiaoDich: double, loiNhan: String) : void
+}
+
+class ATM {
+    - taiKhoanHienTai : IObserverTaiKhoan
+    + duaTheVao(the: IObserverTaiKhoan) : void
+    + rutTheRa() : void
+    + rutTien(soTien: double) : void
+}
+note left of ATM: Lớp Subject.\nChỉ liên kết với Interface,\nkhông quan tâm logic tính\ntoán bên trong của Tài Khoản.
+
+TaiKhoan ..|> IObserverTaiKhoan : implements
+ATM o--> "0..1" IObserverTaiKhoan : triggers >
+
+@enduml

@@ -1,0 +1,37 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Computer {
+    - cpu : String
+    - ram : String
+    - screen : String
+    - hardDisk : String
+
+    - Computer(builder: Builder)
+    + toString() : String
+}
+
+class Builder {
+    - cpu : String
+    - ram : String
+    - screen : String
+    - hardDisk : String
+
+    + buildCPU(cpu: String) : Builder
+    + buildRAM(ram: String) : Builder
+    + buildScreen(screen: String) : Builder
+    + buildHardDisk(hardDisk: String) : Builder
+    + build() : Computer
+}
+note right of Builder: Lớp Builder dùng Method Chaining\nđể linh hoạt thiết lập các linh kiện\nnhư CPU, RAM, Ổ cứng...
+
+class Main {
+    + main(args: String[]) : void
+}
+
+Computer +-- Builder : Contains (Inner Class)
+Builder ..> Computer : creates >
+Main ..> Builder : uses >
+Main ..> Computer : uses >
+
+@enduml

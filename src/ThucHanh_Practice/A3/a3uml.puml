@@ -1,0 +1,49 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+enum ShapeType {
+  RECTANGLE
+  TRIANGLE
+  CIRCLE
+}
+
+abstract class Shape {
+  - brush : String
+  - paper : String
+  - frame : String
+  + {abstract} draw() : String
+}
+
+class Rectangle {
+  - {static} instance : Rectangle
+  - Rectangle()
+  + {static} getInstance() : Rectangle
+  + <<Override>> draw() : String
+}
+
+class Triangle {
+  - {static} instance : Triangle
+  - Triangle()
+  + {static} getInstance() : Triangle
+  + <<Override>> draw() : String
+}
+
+class Circle {
+  - {static} instance : Circle
+  - Circle()
+  + {static} getInstance() : Circle
+  + <<Override>> draw() : String
+}
+
+class ShapeFactory {
+  + createShape(shapeType : ShapeType) : Shape
+}
+
+Shape <|-- Rectangle
+Shape <|-- Triangle
+Shape <|-- Circle
+
+ShapeFactory ..> Shape : creates/gets >
+ShapeFactory ..> ShapeType : uses >
+
+@enduml

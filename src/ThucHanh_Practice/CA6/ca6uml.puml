@@ -1,0 +1,42 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface GameObserver {
+    + update(data: PlayerData) : void
+}
+
+class PlayerData {
+    - observers : List<GameObserver>
+    # thoiGian : int
+    # countdown : int
+    # grade : int
+
+    + addObserver(obs: GameObserver) : void
+    + removeObserver(obs: GameObserver) : void
+    # notifyObservers() : void
+    + setThoiGian(t: int) : void
+    + setCountdown(c: int) : void
+    + setGrade(g: int) : void
+}
+note right of PlayerData: Giải pháp Pull Model:\nTruyền chính đối tượng này\ncho Observer để linh hoạt\ndữ liệu.
+
+class AdvancedPlayerData {
+    - level : int
+    - mucThuong : int
+    + setLevel(l: int) : void
+    + setMucThuong(m: int) : void
+}
+note right of AdvancedPlayerData: Giải quyết Câu 2:\nMở rộng dữ liệu mà không\nlàm vỡ Interface GameObserver.
+
+class Dashboard {
+    - tenManHinh : String
+    + Dashboard(tenManHinh: String)
+    + update(data: PlayerData) : void
+}
+
+PlayerData <|-- AdvancedPlayerData
+GameObserver <|.. Dashboard
+PlayerData o--> "*" GameObserver : notifies >
+GameObserver ..> PlayerData : pulls data from >
+
+@enduml

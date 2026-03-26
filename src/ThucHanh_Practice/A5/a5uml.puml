@@ -1,0 +1,37 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Book {
+    - tuaDe : String
+    - soTrang : int
+    - tacGia : String
+    - danhSachChuong : List<String>
+
+    - Book(builder: Builder)
+    + toString() : String
+}
+
+class Builder {
+    - tuaDe : String
+    - soTrang : int
+    - tacGia : String
+    - danhSachChuong : List<String>
+
+    + setTuaDe(tuaDe: String) : Builder
+    + setSoTrang(soTrang: int) : Builder
+    + setTacGia(tacGia: String) : Builder
+    + addChuong(tenChuong: String) : Builder
+    + build() : Book
+}
+note right of Builder: Lớp tĩnh (static) bên trong Book.\nÁp dụng Method Chaining\nbằng cách 'return this' ở các setter.
+
+class Main {
+    + main(args: String[]) : void
+}
+
+Book +-- Builder : Contains (Inner Class)
+Builder ..> Book : creates >
+Main ..> Builder : uses >
+Main ..> Book : uses >
+
+@enduml

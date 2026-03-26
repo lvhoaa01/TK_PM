@@ -1,0 +1,35 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface NhaDauTu {
+    + capNhatTiGia(tiGiaMoi: double) : void
+}
+
+class NhaDauTuA {
+    - ten : String
+    + NhaDauTuA(ten: String)
+    + capNhatTiGia(tiGiaMoi: double) : void
+}
+
+class NhaDauTuB {
+    - ten : String
+    + NhaDauTuB(ten: String)
+    + capNhatTiGia(tiGiaMoi: double) : void
+}
+
+class DichVuTiGia {
+    - danhSachNhaDauTu : List<NhaDauTu>
+    - tiGiaHienTai : double
+
+    + dangKy(ndt: NhaDauTu) : void
+    + huyDangKy(ndt: NhaDauTu) : void
+    + setTiGia(tiGiaMoi: double) : void
+    - thongBaoNhaDauTu() : void
+}
+note left of DichVuTiGia: Lớp Subject.\nKhông chứa bất kỳ logic\nmua/bán nào. Chỉ phát\ntỉ giá khi có biến động.
+
+NhaDauTuA ..|> NhaDauTu : implements
+NhaDauTuB ..|> NhaDauTu : implements
+DichVuTiGia o--> "*" NhaDauTu : notifies >
+
+@enduml
